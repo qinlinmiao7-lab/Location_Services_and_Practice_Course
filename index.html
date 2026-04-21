@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LA-Planner 课程项目展示</title>
+    <style>
+        /* 原有样式保持不变 */
+        :root {
+            --primary-blue: #2c3e50;
+            --secondary-blue: #34495e;
+            --accent-orange: #e67e22;
+            --light-bg: #f9f9f9;
+            --border-color: #dcdde1;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: #333;
+            margin: 0;
+            background-color: var(--light-bg);
+        }
+
+        .top-bar { height: 5px; background: linear-gradient(to right, var(--primary-blue), var(--accent-orange)); }
+
+        header {
+            background-color: white;
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 { margin: 0; color: var(--primary-blue); font-size: 2.2em; }
+        header p { color: #666; margin-top: 10px; font-size: 1.1em; }
+
+        .hero-meta {
+            margin-top: 20px;
+            display: inline-flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 18px 28px;
+            border-radius: 16px;
+            border: 1px solid rgba(44,62,80,0.2);
+            background: linear-gradient(135deg, rgba(44,62,80,0.04), rgba(230,126,34,0.12));
+            color: var(--secondary-blue);
+            font-weight: 600;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .hero-meta__name { font-size: 1.1em; letter-spacing: 0.08em; }
+        .hero-meta__tagline { font-size: 1em; color: #4a6072; }
+
+        .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+
+        section {
+            background: white;
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: var(--primary-blue);
+            border-left: 6px solid var(--accent-orange);
+            padding-left: 15px;
+            margin-bottom: 25px;
+            font-size: 1.6em;
+        }
+
+        h3 { color: var(--secondary-blue); margin-top: 30px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+
+        .flex-row { display: flex; gap: 30px; align-items: start; }
+        .flex-item { flex: 1; }
+
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .highlight-card {
+            background: #f8fbff;
+            border: 1px solid #e1e8ed;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .highlight-card b { color: var(--accent-orange); }
+
+        .logic-step {
+            background: #fdfdfd;
+            border: 1px dashed #ccc;
+            padding: 20px;
+            margin: 15px 0;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.95em;
+            line-height: 1.5;
+            color: #444;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th { background-color: #f4f4f4; color: var(--primary-blue); }
+        .best { color: #27ae60; font-weight: bold; }
+
+        .figure-img { width: 100%; max-width: 500px; height: auto; display: block; margin: 0 auto 10px; border-radius: 8px; }
+        .figure-img2 { width: 100%; max-width: 660px; height: auto; display: block; margin: 0 auto 10px; border-radius: 8px; }
+        .figure-note { margin-top: 12px; padding: 12px 14px; background: #f6f9fc; border-left: 4px solid var(--accent-orange); border-radius: 8px; line-height: 1.7; }
+        .placeholder-img { width: 100%; height: auto; display: block; border-radius: 8px; }
+        .figure-wrap { margin: 16px 0 18px; }
+        
+        .img-placeholder {
+            background: #f0f0f0;
+            height: 265px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        footer { text-align: center; padding: 40px; color: #999; font-size: 0.9em; }
+
+        @media (max-width: 768px) { .flex-row { flex-direction: column; } }
+    </style>
+</head>
+<body>
+
+<div class="top-bar"></div>
+
+<header>
+    <h1>LA-Planner: 感知规划系统研究</h1>
+    <p>未知与特征受限环境下的四旋翼无人机自主飞行</p>
+    <div class="hero-meta">
+        <div class="hero-meta__name">覃琳淼 · 2023302141222</div>
+        <div class="hero-meta__tagline">位置服务与实践结课展示</div>
+    </div>
+</header>
+
+<div class="container">
+
+    <section>
+        <h2>1. 研究背景与动机</h2>
+        <div class="flex-row">
+            <div class="flex-item">
+                <p>在GPS信号缺失的受限环境中（如地下隧道、深山森林、受灾废弃工厂），无人机必须完全依赖板载传感器（如单/双目相机和IMU）进行视觉惯性里程计（VIO）定位。然而，在实际作业中，“规划”与“感知”往往存在天然的矛盾，传统的规划器在面临以下极端情况时极易崩溃：</p>
+                <ul>
+                    <li><b>感知资源的严重博弈：</b> 无人机存在“前视探索”与“回视定位”的矛盾。为了快速获取未知区域的地图信息，无人机倾向于看向前方；但如果前方是光照极差或纹理稀疏的角度，会导致特征点跟踪失败。如何在有限的相机视野（FOV）内分配感知资源，是实现长距离稳定飞行的关键。</li>
+                    <li><b>视觉拓扑的“死胡同”：</b> 传统的贪婪探索算法（如基于Frontier的方法）只关注地理上的未知空间，却不考虑视觉上的鲁棒性。这可能导致无人机飞入一个物理上开阔、但视觉特征极度匮乏的区域。一旦定位漂移超过阈值，状态估计的失效将直接导致避障控制崩溃，引发不可逆的撞击。</li>
+                    <li><b>高维度优化的计算鸿沟：</b> 将感知约束（如特征可见性）直接耦合进轨迹优化会导致高度非线性的问题。现有的感知算法往往需要在机载电脑上进行海量的迭代计算，这不仅消耗电力，更会导致重规划延迟过高，使无人机无法在高速飞行中实时避障。</li>
+                </ul>
+            </div>
+            <div class="flex-item">
+                <img src="images/fig1.png" alt="Fig.1 实验环境展示图" class="figure-img">
+                <p style="font-size: 0.9em; color: #555; text-align: justify;">Fig. 1: 真实世界飞行实验。在黑暗且特征受限的死胡同场景中，LA-Planner 能够引导无人机在确保定位鲁棒性的前提下，成功寻找可行路径并完成导航，体现了极高的环境适应能力力。</p>
+                <p class="figure-note"><b>LA-Planner 提出了一种平衡机制</b>，通过自适应分配感知资源，确保无人机在“快速探索”与“稳定定位”之间找到最优解。</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>2. LA-Planner 系统架构</h2>
+        <p>LA-Planner 采用了模块化的层级结构，主要由感知层、目标选择层和局部规划层组成。其核心思想是将昂贵的感知约束拆解为<b>离散的拓扑搜索</b>和<b>高效的凸空间优化</b>。</p>
+        <div class="figure-wrap">
+            <img src="images/fig2.png" alt="Fig.2 系统架构图" class="figure-img2">
+            <p style="font-size: 0.9em; color: #555; text-align: justify;">Fig. 2: LA-Planner 导航框架概览。系统集成三个核心组件：1) 提供高频状态估计与点云地图的感知模块；2) 基于视角转换图（VTG）的目标选择器，负责平衡定位与导航效率；3) 基于“可定位走廊”约束的局部规划器，生成平滑且安全的轨迹。</p>
+        </div>
+        <p><b>工作流程：</b></p>
+        <ol>
+            <li>感知模块构建局部地图并提取环境特征。</li>
+            <li>VTG 选择器在拓扑图中搜索一条“最具定位鲁棒性”的路径，并选定一个局部目标点（Local Target）。</li>
+            <li>局部规划器在满足避障的前提下，通过 B-样条曲线生成位置轨迹，并根据特征共同可见性（Co-visibility）优化偏航角（Yaw），形成“角度安全走廊”。</li>
+        </ol>
+    </section>
+
+    <section>
+        <h2>3. 关键技术细节</h2>
+        
+        <h3>3.1 视角转换图 (Viewpoint Transition Graph, VTG)</h3>
+        <p>VTG 是整个系统的“大脑”，它不再盲目追求最短路径，而是通过构建一个带有权重的拓扑图来评估每条路径的<b>感知风险</b>。该图融合了以下两种视角节点：</p>
+        <div class="highlight-grid">
+            <div class="highlight-card">
+                <b>A. 特征视角 (Feature View)</b><br>
+                这些节点聚焦于环境中已确认的、纹理丰富的区域。它们充当“定位锚点”，引导无人机定期回望已知特征，以修正累积的定位误差。
+            </div>
+            <div class="highlight-card">
+                <b>B. 边界视角 (Frontier View)</b><br>
+                这些节点位于已知与未知地图的交界处。它们是探索的动力源，引导无人机不断拓展作业范围，发现新的路径。
+            </div>
+        </div>
+        <div class="logic-step">
+            <b>路径权重函数定义：</b><br>
+            Cost(u, v) = Distance_Cost(u, v) + λ · Perception_Uncertainty(u, v)<br>
+            <i>* 当连接两个节点的路径经过特征匮乏区时，Perception_Uncertainty 权重显著增大。</i>
+        </div>
+
+        <h3>3.2 可定位走廊 (Localizable Corridor)</h3>
+        <p>在局部轨迹生成中，最困难的是偏航角（Yaw）的优化。传统的非线性优化由于搜索空间巨大且梯度计算复杂，难以实时重规划。LA-Planner 的解决方案是：</p>
+        
+
+
+        <ul>
+            <li><b>离散化特征评估：</b> 预先评估特征点在不同角度下的可见性，建立一个特征共同可见图（Co-visibility Graph）。</li>
+            <li><b>凸走廊约束：</b> 选取一个能够同时看到最多优质特征的角度范围，作为“角度走廊”。只要无人机的机头朝向保持在这个角度区间内，就能保证定位不丢失。</li>
+            <li><b>算力节省：</b> 这种方法将复杂的非线性优化转化为了<b>线性约束下的多项式优化</b>，计算速度提升了近 10 倍，使得无人机能以 45ms 的超低延迟响应环境变化。</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. 实验验证与结果分析</h2>
+        <p>本研究在仿真平台及实际复杂场景中进行了大规模测试，并与目前最先进的算法 FUEL（侧重探索速度）和 APACE（侧重感知优化）进行了对比分析。</p>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>评估维度</th>
+                    <th>FUEL (2021)</th>
+                    <th>APACE (2023)</th>
+                    <th>LA-Planner (本项目)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>重规划频率 (Latency)</b></td>
+                    <td>中等 (~120ms)</td>
+                    <td>较低 (~390ms)</td>
+                    <td class="best">极高 (~45ms)</td>
+                </tr>
+                <tr>
+                    <td><b>未知环境探索成功率</b></td>
+                    <td>较低 (易在暗区丢失)</td>
+                    <td>较高 (但移动缓慢)</td>
+                    <td class="best">极高 (95%+)</td>
+                </tr>
+                <tr>
+                    <td><b>平均轨迹漂移率 (Drift)</b></td>
+                    <td>> 5.0%</td>
+                    <td>~ 2.1%</td>
+                    <td class="best">< 1.5%</td>
+                </tr>
+                <tr>
+                    <td><b>特征受限场景适应性</b></td>
+                    <td>差</td>
+                    <td>较好</td>
+                    <td class="best">极佳</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="flex-row" style="margin-top: 30px;">
+            <div class="flex-item">
+                <div class="img-placeholder">
+                    <img src="images/fig6.png" alt="Fig.6 仿真对比图" class="placeholder-img">
+                </div>
+                <p style="font-size: 0.85em; color: #666; margin-top: 8px;">Fig. 6: 不同算法在复杂迷宫场景下的路径轨迹对比。LA-Planner 展示了更平滑的偏航角切换和更少的定位波动。</p>
+            </div>
+            <div class="flex-item">
+                <div class="img-placeholder">
+                    <img src="images/fig9.png" alt="Fig.9 实机飞行轨迹图" class="placeholder-img">
+                </div>
+                <p style="font-size: 0.85em; color: #666; margin-top: 8px;">Fig. 9: 室内特征受限环境下的实际轨迹。在低纹理走廊中，LA-Planner 成功保持了稳定的特征点锁定。</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>5. 总结与展望</h2>
+        <p>通过本次结课作业的研究，我深入理解了无人机在复杂未知环境下的感知挑战。<b>LA-Planner</b> 成功证明了：通过合理的资源分配（VTG）和简化的约束建模（角度走廊），无人机可以不再“盲目探索”，而是在充分感知环境的前提下实现高效自主飞行。</p>
+        <p><b>未来改进方向：</b> 可以考虑引入深度学习语义信息，让无人机不仅能识别特征点，还能理解环境中哪些物体（如灯光、固定标识）是更可靠的参考物，进一步提升感知鲁棒性。</p>
+    </section>
+
+</div>
+
+<footer>
+    <p>基于论文: "Perception-aware Planning for Quadrotor Flight in Unknown and Feature-limited Environments"</p>
+    <p>2026年 · 武汉大学 · 覃琳淼的位置服务与实践课程结课作业</p>
+</footer>
+
+</body>
+</html>
